@@ -1,0 +1,48 @@
+<%- include('../partials/header') %>
+<h1><%= isEdit ? 'Edit item' : 'New item' %></h1>
+<%- include('../partials/errors') %>
+<form method="POST" action="<%= action %>" class="form">
+  <label for="name">Name</label>
+  <input id="name" name="name" type="text" maxlength="150" required value="<%= item.name || '' %>">
+
+  <label for="description">Description</label>
+  <textarea id="description" name="description" rows="4"><%= item.description || '' %></textarea>
+
+  <div class="row">
+    <div>
+      <label for="price">Price ($)</label>
+      <input id="price" name="price" type="number" step="0.01" min="0" required value="<%= item.price != null ? item.price : '' %>">
+    </div>
+    <div>
+      <label for="quantity">Quantity</label>
+      <input id="quantity" name="quantity" type="number" step="1" min="0" required value="<%= item.quantity != null ? item.quantity : 0 %>">
+    </div>
+  </div>
+
+  <label for="category_id">Category</label>
+  <select id="category_id" name="category_id" required>
+    <option value="">Choose a category</option>
+    <% categories.forEach(function (c) { %>
+      <option value="<%= c.id %>" <%= String(item.category_id) === String(c.id) ? 'selected' : '' %>><%= c.name %></option>
+    <% }) %>
+  </select>
+
+  <label for="brand_id">Brand</label>
+  <select id="brand_id" name="brand_id">
+    <option value="">Unbranded</option>
+    <% brands.forEach(function (b) { %>
+      <option value="<%= b.id %>" <%= String(item.brand_id) === String(b.id) ? 'selected' : '' %>><%= b.name %></option>
+    <% }) %>
+  </select>
+
+  <% if (isEdit) { %>
+    <label for="adminPassword">Admin password</label>
+    <input id="adminPassword" name="adminPassword" type="password" required>
+  <% } %>
+
+  <div class="actions">
+    <button type="submit" class="btn">Save</button>
+    <a class="btn btn-secondary" href="<%= isEdit ? '/items/' + item.id : '/' %>">Cancel</a>
+  </div>
+</form>
+<%- include('../partials/footer') %>

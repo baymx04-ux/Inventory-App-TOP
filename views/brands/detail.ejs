@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+<div class="page-head">
+  <h1><%= brand.name %></h1>
+  <div class="actions">
+    <a class="btn" href="/items/new?brand=<%= brand.id %>">Add item</a>
+    <a class="btn btn-secondary" href="/brands/<%= brand.id %>/edit">Edit</a>
+  </div>
+</div>
+<%- include('../partials/errors') %>
+<p class="muted">Country: <%= brand.country || 'Unknown' %></p>
+
+<% if (!items.length) { %>
+  <p class="muted">No items from this brand.</p>
+<% } else { %>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Item</th><th>Category</th><th class="num">Price</th><th class="num">In stock</th></tr></thead>
+      <tbody>
+        <% items.forEach(function (i) { %>
+          <tr>
+            <td><a href="/items/<%= i.id %>"><%= i.name %></a></td>
+            <td><%= i.category_name %></td>
+            <td class="num">$<%= Number(i.price).toFixed(2) %></td>
+            <td class="num <%= i.quantity === 0 ? 'out' : '' %>"><%= i.quantity === 0 ? 'Out of stock' : i.quantity %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<section class="danger-zone">
+  <h2>Delete brand</h2>
+  <p class="muted">Its items are kept and will show as unbranded.</p>
+  <%- include('../partials/deleteForm', { action: '/brands/' + brand.id + '/delete', confirmText: 'Delete this brand? Its items will become unbranded.' }) %>
+</section>
+<%- include('../partials/footer') %>

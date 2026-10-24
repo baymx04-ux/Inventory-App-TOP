@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+<div class="page-head">
+  <h1>Categories</h1>
+  <a class="btn" href="/categories/new">New category</a>
+</div>
+
+<% if (!categories.length) { %>
+  <p class="muted">No categories yet. Create one to get started.</p>
+<% } else { %>
+  <ul class="card-grid">
+    <% categories.forEach(function (c) { %>
+      <li class="card">
+        <h2><a href="/categories/<%= c.id %>"><%= c.name %></a></h2>
+        <p><%= c.description || 'No description.' %></p>
+        <p class="muted"><%= c.item_count %> <%= c.item_count === 1 ? 'item' : 'items' %></p>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>
+<%- include('partials/footer') %>

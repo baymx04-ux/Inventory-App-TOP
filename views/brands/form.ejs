@@ -1,0 +1,21 @@
+<%- include('../partials/header') %>
+<h1><%= isEdit ? 'Edit brand' : 'New brand' %></h1>
+<%- include('../partials/errors') %>
+<form method="POST" action="<%= action %>" class="form">
+  <label for="name">Name</label>
+  <input id="name" name="name" type="text" maxlength="100" required value="<%= brand.name || '' %>">
+
+  <label for="country">Country</label>
+  <input id="country" name="country" type="text" maxlength="100" value="<%= brand.country || '' %>">
+
+  <% if (isEdit) { %>
+    <label for="adminPassword">Admin password</label>
+    <input id="adminPassword" name="adminPassword" type="password" required>
+  <% } %>
+
+  <div class="actions">
+    <button type="submit" class="btn">Save</button>
+    <a class="btn btn-secondary" href="<%= isEdit ? '/brands/' + brand.id : '/brands' %>">Cancel</a>
+  </div>
+</form>
+<%- include('../partials/footer') %>

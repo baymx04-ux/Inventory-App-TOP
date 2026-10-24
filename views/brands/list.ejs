@@ -1,0 +1,24 @@
+<%- include('../partials/header') %>
+<div class="page-head">
+  <h1>Brands</h1>
+  <a class="btn" href="/brands/new">New brand</a>
+</div>
+<% if (!brands.length) { %>
+  <p class="muted">No brands yet.</p>
+<% } else { %>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Brand</th><th>Country</th><th class="num">Items</th></tr></thead>
+      <tbody>
+        <% brands.forEach(function (b) { %>
+          <tr>
+            <td><a href="/brands/<%= b.id %>"><%= b.name %></a></td>
+            <td><%= b.country || 'Unknown' %></td>
+            <td class="num"><%= b.item_count %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+<%- include('../partials/footer') %>

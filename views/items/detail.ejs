@@ -1,0 +1,23 @@
+<%- include('../partials/header') %>
+<div class="page-head">
+  <h1><%= item.name %></h1>
+  <div class="actions">
+    <a class="btn btn-secondary" href="/items/<%= item.id %>/edit">Edit</a>
+  </div>
+</div>
+<dl class="details">
+  <dt>Category</dt><dd><a href="/categories/<%= item.category_id %>"><%= item.category_name %></a></dd>
+  <dt>Brand</dt>
+  <dd>
+    <% if (item.brand_id) { %><a href="/brands/<%= item.brand_id %>"><%= item.brand_name %></a><% } else { %>Unbranded<% } %>
+  </dd>
+  <dt>Price</dt><dd>$<%= Number(item.price).toFixed(2) %></dd>
+  <dt>In stock</dt><dd class="<%= item.quantity === 0 ? 'out' : '' %>"><%= item.quantity === 0 ? 'Out of stock' : item.quantity %></dd>
+  <dt>Description</dt><dd><%= item.description || 'No description.' %></dd>
+</dl>
+
+<section class="danger-zone">
+  <h2>Delete item</h2>
+  <%- include('../partials/deleteForm', { action: '/items/' + item.id + '/delete', confirmText: 'Delete this item?' }) %>
+</section>
+<%- include('../partials/footer') %>

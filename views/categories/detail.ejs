@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+<div class="page-head">
+  <h1><%= category.name %></h1>
+  <div class="actions">
+    <a class="btn" href="/items/new?category=<%= category.id %>">Add item</a>
+    <a class="btn btn-secondary" href="/categories/<%= category.id %>/edit">Edit</a>
+  </div>
+</div>
+<%- include('../partials/errors') %>
+<p><%= category.description || 'No description.' %></p>
+
+<% if (!items.length) { %>
+  <p class="muted">No items in this category yet.</p>
+<% } else { %>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Item</th><th>Brand</th><th class="num">Price</th><th class="num">In stock</th></tr></thead>
+      <tbody>
+        <% items.forEach(function (i) { %>
+          <tr>
+            <td><a href="/items/<%= i.id %>"><%= i.name %></a></td>
+            <td><%= i.brand_name || 'Unbranded' %></td>
+            <td class="num">$<%= Number(i.price).toFixed(2) %></td>
+            <td class="num <%= i.quantity === 0 ? 'out' : '' %>"><%= i.quantity === 0 ? 'Out of stock' : i.quantity %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<section class="danger-zone">
+  <h2>Delete category</h2>
+  <p class="muted">A category that still has items cannot be deleted.</p>
+  <%- include('../partials/deleteForm', { action: '/categories/' + category.id + '/delete', confirmText: 'Delete this category?' }) %>
+</section>
+<%- include('../partials/footer') %>
